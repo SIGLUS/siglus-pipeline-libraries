@@ -1,20 +1,6 @@
-
-stage('Testing') {
-    unit_test()
-}
-
-
-
-
-stage('Gradle Build') {
-    build()
-}
-
-
-
-
-stage('Static Code Analysis'){
-    static_code_analysis()
-}
+pmd_test()
+unit_test()
+build()
+static_code_analysis()
 
 
