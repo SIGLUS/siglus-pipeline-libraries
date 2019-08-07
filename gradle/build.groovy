@@ -2,7 +2,8 @@ void call(){
   stage('Gradle Build') {
     node{
       println "gradle: build()"
-      sh 'docker run --rm  -u gradle -v ${PWD}:/app -w /app  siglusdevops/gradle:4.10.3 gradle clean build'
+      sh 'mkdir -p /tmp/gradle-caches/${env.JOB_BASE_NAME}'
+      sh 'docker run --rm  -u gradle -v /tmp/gradle-caches/${env.JOB_BASE_NAME}:/home/gradle/.gradle/caches -v ${PWD}:/app -w /app  siglusdevops/gradle:4.10.3 gradle clean build'
     }
   }
   post {
