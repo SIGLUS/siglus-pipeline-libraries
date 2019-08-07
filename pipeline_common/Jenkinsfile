@@ -1,17 +1,28 @@
-stage('Testing') {
-    unit_test()
-}
-post {
-    always {
-        junit 'build/reports/**/*.xml'
+stages{
+    stage('Testing') {
+        unit_test()
+    }
+    post {
+        always {
+            junit 'build/reports/**/*.xml'
+        }
     }
 }
-stage('Gradle Build') {
-    build()
-}
-post {
-    success {
-        archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
+
+stages{
+    stage('Gradle Build') {
+        build()
+    }
+    post {
+        success {
+            archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
+        }
     }
 }
-static_code_analysis()
+
+stages{
+    stage('Static Code Analysis'){
+        static_code_analysis()
+    }
+}
+
