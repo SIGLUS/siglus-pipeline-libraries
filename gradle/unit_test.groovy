@@ -1,3 +1,4 @@
+import hudson.model.*
 void call(){
   stage('Testing') {
     println "gradle: unit_test()"
