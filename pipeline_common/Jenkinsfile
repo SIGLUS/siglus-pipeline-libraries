@@ -1,6 +1,7 @@
 pmd_test()
 unit_test()
 build()
+image_build()
 static_code_analysis()
 
 
