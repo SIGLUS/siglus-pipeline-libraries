@@ -1,11 +1,28 @@
-void call(){
-  stage('Gradle Build') {
+def call(){
+  stage "Building", {
     node{
-      println "gradle: build()"
-      sh 'mkdir -p /tmp/gradle-caches/${JOB_NAME}'
-      sh 'docker run --rm  -u gradle -v /tmp/gradle-caches/${JOB_NAME}:/home/gradle/.gradle/caches -v ${PWD}:/app -w /app  siglusdevops/gradle:4.10.3 gradle clean build'
-      archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
-      archiveArtifacts artifacts: 'build/reports/'
+       withCredentials([file(credentialsId: '8da5ba56-8ebb-4a6a-bdb5-43c9d0efb120', variable: 'ENV_FILE')]) {
+          sh '''
+          GIT_REVISION=$(git rev-parse HEAD)
+          IMAGE_VERSION=${BUILD_NUMBER}-${GIT_REVISION}
+          PROJECT_NAME=${JOB_NAME%/*}
+          IMAGE_NAME=siglusdevops/${PROJECT_NAME#*-}:${IMAGE_VERSION}
+          trap $(docker-compose -f docker-compose.builder.yml down --volumes) EXIT
+
+          rm -f .env
+          cp $ENV_FILE .env
+          if [ "$GIT_BRANCH" != "master" ]; then
+              sed -i '' -e "s#^TRANSIFEX_PUSH=.*#TRANSIFEX_PUSH=false#" .env  2>/dev/null || true
+          fi
+
+          docker-compose -f docker-compose.builder.yml run -e BUILD_NUMBER=$BUILD_NUMBER -e GIT_BRANCH=$GIT_BRANCH builder
+          docker-compose -f docker-compose.builder.yml build image
+          docker tag openlmis/${PROJECT_NAME#*-}:latest ${IMAGE_NAME}
+          docker push ${IMAGE_NAME}
+          docker rmi ${IMAGE_NAME}
+          echo "*************Image name is [${IMAGE_NAME}]*************"
+          '''
+       }
     }
   }
 }

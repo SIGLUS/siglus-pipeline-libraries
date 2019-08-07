@@ -1,5 +1,5 @@
 void call(){
-  stage('Unit Testing'){
+  stage('Testing'){
     node{
       println "gradle: unit_test()"
       sh 'mkdir -p /tmp/gradle-caches/${JOB_NAME}'
