@@ -1,3 +1,10 @@
-unit_test()
-build()
-static_code_analysis()
+stage "Testing", {
+    unit_test()
+}
+
+stage "Gradle build",{
+    build()
+}
+stage "Static Code Analysis",{
+    static_code_analysis()
+}

@@ -1,5 +1,3 @@
 void call(){
-    stage "Gradle build", {
-  println "gradle: build()"
-    }
+    println "gradle: build()"
 }
