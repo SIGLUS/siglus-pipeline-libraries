@@ -2,22 +2,14 @@
 stage('Testing') {
     unit_test()
 }
-post {
-    always {
-        junit 'build/reports/**/*.xml'
-    }
-}
+
 
 
 
 stage('Gradle Build') {
     build()
 }
-post {
-    success {
-        archiveArtifacts artifacts: 'build/libs/**/*.jar', fingerprint: true
-    }
-}
+
 
 
 
