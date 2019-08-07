@@ -6,10 +6,7 @@ def call(){
       IMAGE_VERSION=${BUILD_NUMBER}-${GIT_REVISION}
       PROJECT_NAME=${JOB_NAME%/*}
       IMAGE_NAME=siglusdevops/${PROJECT_NAME#*-}:${IMAGE_VERSION}
-      function finish {
-        docker-compose -f docker-compose.builder.yml down --volumes
-      }
-      trap finish EXIT
+      trap $(docker-compose -f docker-compose.builder.yml down --volumes) EXIT
 
       sudo rm -f .env
       cp $ENV_FILE .env
