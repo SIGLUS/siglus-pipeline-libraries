@@ -1,5 +1,5 @@
 void call(){
-  stage('BUILD'){
+  stage('Building'){
     node{
       println "gradle: build()"
       sh 'mkdir -p /efs/gradle-caches/${JOB_NAME}'
