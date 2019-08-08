@@ -2,5 +2,5 @@ pmd_test()
 // unit_test()
 build()
 build_image()
-
+deploy_to dev
 
