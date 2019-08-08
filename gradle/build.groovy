@@ -23,25 +23,6 @@ def call(){
           echo "*************Image name is [${IMAGE_NAME}]*************"
           '''
        }
-       currentBuild.result = processTestResults('SUCCESS')
     }
   }
-}
-
-def processTestResults(status) {
-    checkstyle pattern: '**/build/reports/checkstyle/*.xml'
-    pmd pattern: '**/build/reports/pmd/*.xml'
-    junit '**/build/test-results/*/*.xml'
-
-    AbstractTestResultAction testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-    if (testResultAction != null) {
-        failuresCount = testResultAction.failCount
-        echo "Failed tests count: ${failuresCount}"
-        if (failuresCount > 0) {
-            echo "Setting build unstable due to test failures"
-            status = 'UNSTABLE'
-        }
-    }
-
-    return status
 }
