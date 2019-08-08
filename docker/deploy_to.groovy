@@ -11,10 +11,11 @@ void call(app_env){
                     IMAGE_VERSION=${BUILD_NUMBER}-${GIT_REVISION}
                     PROJECT_NAME=${JOB_NAME%/*}
                     SERVICE_NAME=${PROJECT_NAME#*-}
+                    IMAGE_NAME=OL_${SERVICE_NAME^^}_VERSION
                     rm -f settings.env
                     cp $SETTING_ENV settings.env
                     sed -i "s#<APP_ENV>#${APP_ENV}#g" settings.env
-                    export OL_${SERVICE_NAME^^}_VERSION=${IMAGE_VERSION}
+                    eval ${IMAGE_NAME}=${IMAGE_VERSION}
                     printenv
                     docker-compose -f docker-compose.yml -p openlmis-ref-distro up -d --force-recreate ${SERVICE_NAME}
                 '''
