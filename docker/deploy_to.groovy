@@ -13,6 +13,7 @@ void call(app_env){
         DEPLOY_SERVICE=OL_${PROJECT_NAME#*-}_VERSION
         eval "${DEPLOY_SERVICE^^}"='${IMAGE_NAME}'
         printenv
+        docker-compose -f docker-compose.yml -p openlmis-ref-distro up -d --force-recreate ${PROJECT_NAME#*-}
       '''
     }
   }
