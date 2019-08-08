@@ -8,6 +8,7 @@ application_environments{
   dev{
     short_name = "dev"
     long_name = "Development"
+    hosts = "dev.siglus.us"
   }
   test{
     short_name = "test"
