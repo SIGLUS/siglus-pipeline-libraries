@@ -11,7 +11,7 @@ void call(app_env){
                     IMAGE_VERSION=${BUILD_NUMBER}-${GIT_REVISION}
                     PROJECT_NAME=${JOB_NAME%/*}
                     SERVICE_NAME=${PROJECT_NAME#*-}
-                    IMAGE_NAME=OL_${SERVICE_NAME^^}_VERSION
+                    IMAGE_NAME=`echo "OL_${SERVICE_NAME}_VERSION" |  tr '[:lower:]' '[:upper:]'`
                     rm -f settings.env
                     cp $SETTING_ENV settings.env
                     sed -i "s#<APP_ENV>#${APP_ENV}#g" settings.env
