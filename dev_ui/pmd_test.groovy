@@ -15,8 +15,6 @@ void call(){
           docker-compose pull
           docker-compose down --volumes
           docker-compose run --entrypoint /dev-ui/build.sh ${SERVICE_NAME}
-          docker-compose build image
-          docker-compose down --volumes
       '''
     }
   }
