@@ -9,6 +9,7 @@ void call(){
               sed -i '' -e "s#^TRANSIFEX_PUSH=.*#TRANSIFEX_PUSH=false#" .env  2>/dev/null || true
           fi
           export "UID=`id -u jenkins`"
+          DOCKERHUB_ORG=siglusdevops
           PROJECT_NAME=${JOB_NAME%/*}
           SERVICE_NAME=${PROJECT_NAME#*-}
           docker-compose pull
@@ -20,5 +21,3 @@ void call(){
     }
   }
 }
-
-void s
