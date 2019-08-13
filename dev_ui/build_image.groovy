@@ -3,7 +3,7 @@ void call(){
     node{
       println "grunt: build()"
       sh '''
-          NODE_CACHE_ROOT=/ebs/node-caches/
+          export NODE_CACHE_ROOT=/ebs/node-caches
           export "UID=`id -u jenkins`"
           export DOCKERHUB_ORG=siglusdevops
           docker-compose build image
