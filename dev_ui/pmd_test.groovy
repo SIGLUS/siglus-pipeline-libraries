@@ -1,7 +1,6 @@
 void call(){
   stage('Testing'){
     node{
-      println "grunt: pmd_test()"
       sh '''
           NODE_CACHE_ROOT=/ebs/node-caches/
           wget https://raw.githubusercontent.com/SIGLUS/openlmis-ref-distro/master/settings-sample.env -O .env
