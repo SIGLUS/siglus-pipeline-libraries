@@ -13,7 +13,9 @@ void call(){
           PROJECT_NAME=${JOB_NAME%/*}
           IMAGE_NAME=${DOCKERHUB_ORG}/${PROJECT_NAME#*-}:${IMAGE_VERSION}
           docker tag ${DOCKERHUB_ORG}/${PROJECT_NAME#*-}:latest ${IMAGE_NAME}
+          docker push ${DOCKERHUB_ORG}/${PROJECT_NAME#*-}:latest
           docker push ${IMAGE_NAME}
+          docker rmi ${IMAGE_NAME} ${DOCKERHUB_ORG}/${PROJECT_NAME#*-}:latest
       '''
     }
   }
