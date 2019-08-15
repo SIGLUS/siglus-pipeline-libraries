@@ -19,7 +19,7 @@ void call(app_env){
                     echo "${IMAGE_NAME}=${IMAGE_VERSION}" > .env
                     echo "Start deregister ${SERVICE_NAME} on ${APP_ENV} consul"
                     curl -s http://dev.siglus.us:8500/v1/health/service/${SERVICE_NAME} | \
-                      jq '.[].Service.ID' | sed "s/\"//g" | \
+                      jq -r '.[].Service.ID' | \
                       xargs curl -XPUT http://dev.siglus.us:8500/v1/agent/service/deregister/
                     echo "Start deploy ${SERVICE_NAME} on ${APP_ENV}"
                     docker-compose -H ${DOCKER_HOST} -f docker-compose.yml -p openlmis-ref-distro up --no-deps --force-recreate -d ${SERVICE_NAME}
