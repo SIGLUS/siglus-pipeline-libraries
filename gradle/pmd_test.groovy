@@ -18,7 +18,7 @@ void call(){
 
       sh 'mkdir -p /ebs2/gradle-caches/${JOB_NAME}'
       sh 'mkdir -p /ebs2/node-caches/${JOB_NAME}'
-      sh 'docker run --rm -u gradle -v ${PWD}:/app -w /app siglusdevops/gradle:4.10.3 gradle pmdMain pmdTest checkstyleMain checkstyleTest'
+      sh 'docker run --rm -u gradle -v ${PWD}:/app -w /app siglusdevops/gradle:4.10.3 gradle checkstyleMain checkstyleTest checkstyleIntegrationTest pmdMain pmdTest pmdIntegrationTest'
     }
   }
 }
