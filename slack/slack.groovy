@@ -1,6 +1,6 @@
 @AfterStep
 def call(){
-    switch(currentBuild.result){
+    switch(currentBuild.result.status){
         case null: // no result set yet means success
         case "SUCCESS":
           slackSend color: "good", message: "Build Successful: ${env.JOB_URL}"
