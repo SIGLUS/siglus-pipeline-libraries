@@ -1,4 +1,14 @@
 @AfterStep
-void call(context){
-    slackSend color: '#ff0000', message: "Build Failure: ${env.JOB_URL}"
+def call(context){
+    switch(context.status){
+        case null: // no result set yet means success
+        case "SUCCESS":
+          slackSend color: "good", message: "Build Successful: ${env.JOB_URL}"
+          break;
+        case "FAILURE":
+          slackSend color: '#ff0000', message: "Build Failure: ${env.JOB_URL}"
+          break;
+        default:
+          echo "Slack Notifier doing nothing: ${context.status}"
+    }
 }
