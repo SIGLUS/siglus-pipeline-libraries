@@ -23,5 +23,5 @@ application_environments{
 
 libraries{
   merge = true
-  // docker
+  slack
 }
