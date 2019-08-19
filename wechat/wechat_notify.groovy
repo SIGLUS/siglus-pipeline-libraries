@@ -6,14 +6,14 @@ def call(context){
           case null: // no result set yet means success
           case "SUCCESS":
             sh '''
-              USER_NAME=$(git show -s --pretty=%an)
-              curl -s 'http://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHAT_TOKEN}' \
+              GIT_USER_NAME=$(git show -s --pretty=%an)
+              curl -s 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHAT_TOKEN}' \
                   -H 'Content-Type: application/json' \
                   -d '
                   {
                     "msgtype": "markdown",
                     "markdown": {
-                        "content": "<font color=\"info\">Build Success: by ${USER_NAME}</font>\n>JOB_NAME: ${env.JOB_NAME}"
+                        "content": "<font color=\"info\">Build Success: by ${GIT_USER_NAME}</font>\n>JOB_NAME: ${JOB_NAME}"
                     }
                   }'
             '''
@@ -21,7 +21,7 @@ def call(context){
           case "FAILURE":
             sh '''
               USER_NAME=$(git show -s --pretty=%an)
-              curl -s 'http://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHAT_TOKEN}' \
+              curl -s 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHAT_TOKEN}' \
                   -H 'Content-Type: application/json' \
                   -d '
                   {
