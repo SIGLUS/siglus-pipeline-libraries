@@ -16,7 +16,7 @@ def call(context){
                         "content": "<font color=\"info\">Build Success: by ${GIT_USER_NAME}</font>\n>JOB_NAME: ${JOB_NAME}"
                     }
                   }'
-            '''
+            ''', encoding: 'UTF-8'
             break;
           case "FAILURE":
             sh '''
@@ -30,7 +30,7 @@ def call(context){
                         "content": "<font color=\"warning\">Build Failure: by ${GIT_USER_NAME}</font>\n>JOB_NAME: ${env.JOB_NAME}\n"
                     }
                   }'
-            '''
+            ''', encoding: 'UTF-8'
             break;
           default:
             echo "WeChat Notifier doing nothing: ${context.status}"
