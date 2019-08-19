@@ -2,6 +2,7 @@
 def call(context){
   node{
     withCredentials([string(credentialsId: 'wechat_token', variable: 'WECHAT_TOKEN')]){
+      sh 'printenv'
       switch(context.status){
           case null: // no result set yet means success
           case "SUCCESS":
