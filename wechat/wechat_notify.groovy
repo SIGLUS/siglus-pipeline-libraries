@@ -6,6 +6,8 @@ def call(context){
           case null: // no result set yet means success
           case "SUCCESS":
             sh '''
+              export LANG=en_US.UTF-8
+              export LANGUAGE=en_US:en
               GIT_USER_NAME=$(git show -s --pretty=%an)
               curl -s "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHAT_TOKEN}" \
                   -H 'Content-Type: application/json' \
@@ -16,10 +18,12 @@ def call(context){
                         "content": "<font color=\"info\">Build Success: by ${GIT_USER_NAME}</font>\n>JOB_NAME: ${JOB_NAME}"
                     }
                   }'
-            ''', encoding: 'UTF-8'
+            '''
             break;
           case "FAILURE":
             sh '''
+              export LANG=en_US.UTF-8
+              export LANGUAGE=en_US:en
               GIT_USER_NAME=$(git show -s --pretty=%an)
               curl -s "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHAT_TOKEN}" \
                   -H 'Content-Type: application/json' \
@@ -30,7 +34,7 @@ def call(context){
                         "content": "<font color=\"warning\">Build Failure: by ${GIT_USER_NAME}</font>\n>JOB_NAME: ${env.JOB_NAME}\n"
                     }
                   }'
-            ''', encoding: 'UTF-8'
+            '''
             break;
           default:
             echo "WeChat Notifier doing nothing: ${context.status}"
