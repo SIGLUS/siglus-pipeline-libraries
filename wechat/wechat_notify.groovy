@@ -8,7 +8,7 @@ def call(context){
             sh '''
               GIT_USER_NAME=$(git show -s --pretty=%an)
               cat << EOF > data.json
-{"msgtype": "markdown","markdown": {"content": "<font color=\\"info\\">Build Success: by ${GIT_USER_NAME}</font>\\n>${JOB_NAME}: ${JOB_URL}"}}
+{"msgtype": "markdown","markdown": {"content": "<font color=\\"info\\">Build Success: by ${GIT_USER_NAME}</font>\\n>**${JOB_NAME}:** [${JOB_URL}](${JOB_URL})"}}
 EOF
             '''
             sh '''
