@@ -3,7 +3,7 @@ def call(context){
   node{
     withCredentials([string(credentialsId: 'wechat_token', variable: 'WECHAT_TOKEN')]){
       sh 'printenv'
-      sh '${STAGE_NAME}'
+      sh '${env.STAGE_NAME}'
       switch(context.status){
           case null: // no result set yet means success
           case "SUCCESS":
