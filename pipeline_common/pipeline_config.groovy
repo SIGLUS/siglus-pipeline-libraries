@@ -10,9 +10,10 @@ application_environments{
     long_name = "Development"
     hosts = "dev.siglus.us"
   }
-  test{
-    short_name = "test"
-    long_name = "Test"
+  qa{
+    short_name = "qa"
+    long_name = "Qa"
+    hosts = "qa.siglus.us"
   }
   prod{
     short_name = "prod"
