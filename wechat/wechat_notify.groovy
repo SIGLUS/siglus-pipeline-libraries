@@ -27,7 +27,8 @@ def call(context){
                 {
                   "msgtype": "markdown",
                   "markdown": {
-                      "content": "<font color=\"warning\">Build Success: by ${GIT_USER_NAME}</font>\n>JOB_NAME: ${JOB_NAME}"
+                      "content": "<font color=\"warning\">Build Success: by ${GIT_USER_NAME}</font>\n>JOB_NAME: ${JOB_NAME}",
+                      "mentioned_list":["@all"]
                   }
                 }
               EOF
