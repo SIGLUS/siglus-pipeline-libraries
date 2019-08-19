@@ -7,7 +7,7 @@ def call(context){
           case "SUCCESS":
             sh '''
               GIT_USER_NAME=$(git show -s --pretty=%an)
-              curl -s 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHAT_TOKEN}' \
+              curl -s "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHAT_TOKEN}" \
                   -H 'Content-Type: application/json' \
                   -d '
                   {
@@ -20,14 +20,14 @@ def call(context){
             break;
           case "FAILURE":
             sh '''
-              USER_NAME=$(git show -s --pretty=%an)
-              curl -s 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHAT_TOKEN}' \
+              GIT_USER_NAME=$(git show -s --pretty=%an)
+              curl -s "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHAT_TOKEN}" \
                   -H 'Content-Type: application/json' \
                   -d '
                   {
                     "msgtype": "markdown",
                     "markdown": {
-                        "content": "<font color=\"warning\">Build Failure: by ${USER_NAME}</font>\n>JOB_NAME: ${env.JOB_NAME}"
+                        "content": "<font color=\"warning\">Build Failure: by ${GIT_USER_NAME}</font>\n>JOB_NAME: ${env.JOB_NAME}\n"
                     }
                   }'
             '''
