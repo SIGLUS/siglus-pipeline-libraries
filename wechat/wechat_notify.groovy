@@ -6,34 +6,34 @@ def call(context){
           case null: // no result set yet means success
           case "SUCCESS":
             sh '''
-              export LANG=en_US.UTF-8
-              export LANGUAGE=en_US:en
               GIT_USER_NAME=$(git show -s --pretty=%an)
+              cat << EOF > data.json
+                {
+                  "msgtype": "markdown",
+                  "markdown": {
+                      "content": "<font color=\"info\">Build Success: by ${GIT_USER_NAME}</font>\n>JOB_NAME: ${JOB_NAME}"
+                  }
+                }
+              EOF
               curl -s "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHAT_TOKEN}" \
                   -H 'Content-Type: application/json' \
-                  -d '
-                  {
-                    "msgtype": "markdown",
-                    "markdown": {
-                        "content": "<font color=\"info\">Build Success: by ${GIT_USER_NAME}</font>\n>JOB_NAME: ${JOB_NAME}"
-                    }
-                  }'
+                  -d @./data.json
             '''
             break;
           case "FAILURE":
             sh '''
-              export LANG=en_US.UTF-8
-              export LANGUAGE=en_US:en
               GIT_USER_NAME=$(git show -s --pretty=%an)
+              cat << EOF > data.json
+                {
+                  "msgtype": "markdown",
+                  "markdown": {
+                      "content": "<font color=\"warning\">Build Success: by ${GIT_USER_NAME}</font>\n>JOB_NAME: ${JOB_NAME}"
+                  }
+                }
+              EOF
               curl -s "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${WECHAT_TOKEN}" \
                   -H 'Content-Type: application/json' \
-                  -d '
-                  {
-                    "msgtype": "markdown",
-                    "markdown": {
-                        "content": "<font color=\"warning\">Build Failure: by ${GIT_USER_NAME}</font>\n>JOB_NAME: ${env.JOB_NAME}\n"
-                    }
-                  }'
+                  -d @./data.json
             '''
             break;
           default:
