@@ -1,15 +1,17 @@
 @AfterStep
 def call(context){
-  switch(context.status){
-      case null: // no result set yet means success
-      case "SUCCESS":
-        this.post_message("info", "BUILD SUCCESS")
-        break;
-      case "FAILURE":
-        this.post_message("warning", "Build Failure")
-        break;
-      default:
-        echo "WeChat Notifier doing nothing: ${context.status}"
+  node{
+    switch(context.status){
+        case null: // no result set yet means success
+        case "SUCCESS":
+          this.post_message("info", "BUILD SUCCESS")
+          break;
+        case "FAILURE":
+          this.post_message("warning", "Build Failure")
+          break;
+        default:
+          echo "WeChat Notifier doing nothing: ${context.status}"
+    }
   }
 }
 
