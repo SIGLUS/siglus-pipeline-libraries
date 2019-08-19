@@ -1,6 +1,6 @@
 @AfterStep
 def call(context){
-    withCredentials([file(credentialsId: 'wechat_token', variable: 'WECHAT_TOKEN')])
+    withCredentials([string(credentialsId: 'wechat_token', variable: 'WECHAT_TOKEN')])
     switch(context.status){
         case null: // no result set yet means success
         case "SUCCESS":
