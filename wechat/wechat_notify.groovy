@@ -8,7 +8,7 @@ def call(context){
             sh '''
               GIT_USER_NAME=$(git show -s --pretty=%an)
               cat << EOF > data.json
-{"msgtype": "markdown","markdown": {"content": "<font color=\\"info\\">Build Success: by ${GIT_USER_NAME}</font>\\n>JOB_NAME: ${JOB_NAME}"}}
+{"msgtype": "markdown","markdown": {"content": "<font color=\\"info\\">Build Success: by ${GIT_USER_NAME}</font>\\n>${JOB_NAME}: ${JOB_URL}"}}
 EOF
             '''
             sh '''
@@ -21,7 +21,7 @@ EOF
             sh '''
               GIT_USER_NAME=$(git show -s --pretty=%an)
               cat << EOF > data.json
-{"msgtype": "markdown","markdown": {"content": "<font color=\\"warning\\">Build Failure: by ${GIT_USER_NAME}</font>\\n>JOB_NAME: ${JOB_NAME}","mentioned_list":[\"@all\"]}}
+{"msgtype": "markdown","markdown": {"content": "<font color=\\"warning\\">Build Failure: by ${GIT_USER_NAME}</font>\\n>${JOB_NAME}: ${JOB_URL}","mentioned_list":[\"@all\"]}}
 EOF
             '''
             sh '''
