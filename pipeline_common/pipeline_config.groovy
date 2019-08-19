@@ -23,4 +23,5 @@ application_environments{
 
 libraries{
   merge = true
+  slack
 }
