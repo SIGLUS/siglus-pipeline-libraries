@@ -7,7 +7,7 @@ void call(app_env){
 }
 
 @AfterStep
-void call(context){
+void notify_build_reference_ui(context){
     if (context.step.equals("build_app")){
         build job: 'openlmis-reference-ui/master', wait: false
     }
