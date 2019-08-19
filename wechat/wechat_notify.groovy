@@ -19,7 +19,7 @@ void post_message(color, message){
   withCredentials([string(credentialsId: 'wechat_token', variable: 'WECHAT_TOKEN')]){
     sh '''
     USER_NAME=$(git show -s --pretty=%an)
-    cat <<EOT >> send.sh
+    cat <<EOT > send.sh
     curl -s 'http://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${env.WECHAT_TOKEN}' \
           -H 'Content-Type: application/json' \
           -d '
