@@ -1,6 +1,9 @@
 @AfterStep
 def call(context){
   node{
+    if (currentBuild.result == null) {
+      currentBuild.result = 'SUCCESS'
+    }
     withCredentials([string(credentialsId: 'wechat_token', variable: 'WECHAT_TOKEN')]){
       switch(context.status){
           case null: // no result set yet means success
