@@ -6,7 +6,7 @@ def call(context){
             def icons = [":unicorn_face:", ":beer:", ":bee:", ":man_dancing:",
                 ":party_parrot:", ":ghost:", ":dancer:", ":scream_cat:"]
             def randomIndex = (new Random()).nextInt(icons.size())
-            def message = "@here Build <${env.BUILD_URL}|${currentBuild.displayName}> " +
+            def message = "@here Build ${env.JOB_NAME} ${env.STAGE_NAME} <${env.BUILD_URL}|${currentBuild.displayName}> " +
                 "Build Success. ${icons[randomIndex]}"
             slackSend message: "${message}", color: 'good'
           break;
@@ -14,7 +14,7 @@ def call(context){
             def icons = [":unicorn_face:", ":beer:", ":bee:", ":man_dancing:",
                 ":party_parrot:", ":ghost:", ":dancer:", ":scream_cat:"]
             def randomIndex = (new Random()).nextInt(icons.size())
-            def message = "@here Build <${env.BUILD_URL}|${currentBuild.displayName}> " +
+            def message = "@here Build ${env.JOB_NAME} ${env.STAGE_NAME} <${env.BUILD_URL}|${currentBuild.displayName}> " +
                 "Build Failure. ${icons[randomIndex]}"
             slackSend message: "${message}", color: '#ff0000'
           break;
