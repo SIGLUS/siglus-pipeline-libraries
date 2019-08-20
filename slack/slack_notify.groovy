@@ -19,5 +19,5 @@ def notifyStage(color, status_message) {
   def randomIndex = (new Random()).nextInt(icons.size())
   def message = "@here Build <${env.BUILD_URL}|${currentBuild.displayName}> " +
       "${status_message} ${icons[randomIndex]}"
-  slackSend(message: message, color: ${color})
+  slackSend message: ${message}, color: ${color}
 }
