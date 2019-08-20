@@ -8,7 +8,7 @@ def call(context){
             def randomIndex = (new Random()).nextInt(icons.size())
             def message = "@here Build <${env.BUILD_URL}|${currentBuild.displayName}> " +
                 "Build Success. ${icons[randomIndex]}"
-            slackSend message: message, color: 'good'
+            slackSend message: "${message}", color: 'good'
           break;
         case "FAILURE":
             def icons = [":unicorn_face:", ":beer:", ":bee:", ":man_dancing:",
@@ -16,7 +16,7 @@ def call(context){
             def randomIndex = (new Random()).nextInt(icons.size())
             def message = "@here Build <${env.BUILD_URL}|${currentBuild.displayName}> " +
                 "Build Failure. ${icons[randomIndex]}"
-            slackSend message: message, color: '#ff0000'
+            slackSend message: "${message}", color: '#ff0000'
           break;
         default:
           echo "Slack Notifier doing nothing: ${context.status}"
