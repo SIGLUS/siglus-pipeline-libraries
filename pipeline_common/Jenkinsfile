@@ -2,8 +2,6 @@ pmd_test()
 // integration_test()
 build_app()
 build_image()
-parallel {
-    deploy_to dev
-    deploy_to qa
-}
+deploy_to dev
+deploy_to qa
 

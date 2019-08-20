@@ -22,8 +22,8 @@ void call(){
         println "integration_test(): Starting create testing env"
         sh 'docker network create --driver bridge ${JOB_NAME}_inttest'
         sh 'docker run -d --network ${JOB_NAME}_inttest --env-file .env --name ${JOB_NAME}_inttest_db openlmis/postgres:9.6'
-        sh 'docker run -d --network ${JOB_NAME}_inttest --env-file .env --name ${JOB_NAME}_inttest_redis redis:3.2.12'
-        sh 'docker run -d --network ${JOB_NAME}_inttest --env-file .env --name ${JOB_NAME}_inttest_log openlmis/rsyslog:1'
+        sh 'docker run -d --network ${JOB_NAME}_inttest --name ${JOB_NAME}_inttest_redis redis:3.2.12'
+        sh 'docker run -d --network ${JOB_NAME}_inttest --name ${JOB_NAME}_inttest_log openlmis/rsyslog:1'
         println "integration_test(): Starting Running integration_test"
         sh '''
           docker run --rm -u gradle \
