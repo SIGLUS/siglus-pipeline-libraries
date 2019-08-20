@@ -22,5 +22,3 @@ def call(context){
           echo "Slack Notifier doing nothing: ${context.status}"
     }
 }
-
-dd
