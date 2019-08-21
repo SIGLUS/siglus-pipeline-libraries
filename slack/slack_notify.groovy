@@ -18,6 +18,9 @@ def call(context){
             default:
                 echo "Slack Notifier doing nothing: ${context.status}"
         }
+       if (currentBuild.result == null) {
+        currentBuild.result = 'SUCCESS'
+       }
     }
 }
 
