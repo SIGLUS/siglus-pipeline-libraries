@@ -1,4 +1,4 @@
-@AfterStep
+@Notify
 def call(context){
     node{
         def commitUser = sh(returnStdout: true, script: "git show -s --pretty=%an").trim()

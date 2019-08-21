@@ -1,7 +1,7 @@
 void call(app_env){
   stage "Deploy to ${app_env.long_name}", {
       node{
-        when {
+        steps.when {
           allOf {
             expression { return currentBuild.result == null || currentBuild.result == 'SUCCESS' }
           }
