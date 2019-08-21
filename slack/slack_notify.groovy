@@ -2,14 +2,14 @@
 def call(context){
     node{
         def commitUser = sh(returnStdout: true, script: "git show -s --pretty=%an").trim()
-        def commitChangeset = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-status -r HEAD').trim()
+        def commitChangeset = this.getChangeString()
         def icons = [":unicorn_face:", ":beer:", ":bee:", ":man_dancing:",
             ":party_parrot:", ":ghost:", ":dancer:", ":scream_cat:"]
         def randomIndex = (new Random()).nextInt(icons.size())
         switch(context.status){
             case null: // no result set yet means success
             case "SUCCESS":
-                def message = "@here Build ${env.JOB_NAME} ${env.STAGE_NAME} <${env.BUILD_URL}|${currentBuild.displayName}> " +
+                def message = "@here Build ${env.JOB_NAME} ${env.STAGE_NAME} <${env.BUILD_URL}|${currentBuild.displayName}> by ${commitUser} " +
                     "Build Success. ${icons[randomIndex]}\n" + "```${commitChangeset}```"
                 slackSend message: "${message}", color: 'good'
             break;
@@ -22,4 +22,25 @@ def call(context){
             echo "Slack Notifier doing nothing: ${context.status}"
         }
     }
+}
+
+@NonCPS
+def getChangeString() {
+    MAX_MSG_LEN = 100
+    def changeString = ""
+
+    echo "Gathering SCM changes"
+    def changeLogSets = currentBuild.changeSets
+    for (int i = 0; i < changeLogSets.size(); i++) {
+        def entries = changeLogSets[i].items
+        for (int j = 0; j < entries.length; j++) {
+            def entry = entries[j]
+            truncated_msg = entry.msg.take(MAX_MSG_LEN)
+            changeString += " - ${truncated_msg} [${entry.author}]\n"
+        }
+    }
+    if (!changeString) {
+        changeString = " - No new changes"
+    }
+    return changeString
 }
