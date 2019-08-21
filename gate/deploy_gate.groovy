@@ -1,15 +1,17 @@
 @BeforeStep
 void call(context){
-    when {
-        allOf {
-        expression { return currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+    node {
+        when {
+            allOf {
+            expression { return currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+            }
         }
-    }
-    sh 'echo ${context}'
-    if (context.step.equals("Deploy to Qa")){
+        sh 'echo ${context}'
+        if (context.step.equals("Deploy to Qa")){
 
-        timeout(time:5, unit:'DAYS') {
-            input message:'Approve deployment to QA?' , ok: 'Yes'
+            timeout(time:5, unit:'DAYS') {
+                input message:'Approve deployment to QA?' , ok: 'Yes'
+            }
         }
     }
 }

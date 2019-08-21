@@ -5,7 +5,6 @@ def call(context){
     def icons = [":unicorn_face:", ":beer:", ":bee:", ":man_dancing:",
         ":party_parrot:", ":ghost:", ":dancer:", ":scream_cat:"]
     def randomIndex = (new Random()).nextInt(icons.size())
-    echo "${context.step}"
     switch(context.status){
         case null: // no result set yet means success
         case "SUCCESS":
