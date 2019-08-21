@@ -12,7 +12,7 @@ application_environments{
   }
   qa{
     short_name = "qa"
-    long_name = "Qa"
+    long_name = "QA"
     hosts = "qa.siglus.us"
   }
   prod{
