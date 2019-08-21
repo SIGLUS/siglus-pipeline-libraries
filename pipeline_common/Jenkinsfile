@@ -4,8 +4,6 @@ build_app()
 build_image()
 parallel "Deploy to Dev": { deploy_to dev },
          "Deploy to QA": {
-            timeout(time:5, unit:'DAYS') {
-                input message:'Approve deployment to QA?' , ok: 'Yes'
-            }
+             deploy_gate()
              deploy_to qa
           }
