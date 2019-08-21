@@ -1,11 +1,6 @@
 void call(app_env){
   stage "Deploy to ${app_env.long_name}", {
       node{
-        steps.when {
-          allOf {
-            expression { return currentBuild.result == null || currentBuild.result == 'SUCCESS' }
-          }
-        }
         withCredentials([file(credentialsId: 'setting_env', variable: 'SETTING_ENV')]) {
           withEnv(["APP_ENV=${app_env.short_name}", "DOCKER_HOST=tcp://${app_env.hosts}:2376"]) {
             sh '''

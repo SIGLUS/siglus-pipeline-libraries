@@ -1,4 +1,3 @@
-@AfterStep
 def call(context){
     script {
         if (currentBuild.result == null) {
