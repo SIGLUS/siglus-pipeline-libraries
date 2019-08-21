@@ -9,7 +9,7 @@ def call(context){
         switch(context.status){
             case null: // no result set yet means success
             case "SUCCESS":
-                def message = "@here Build ${env.JOB_NAME} ${env.STAGE_NAME} <${env.BUILD_URL}|${currentBuild.displayName}> by ${commitUser} " +
+                def message = "@here ${env.JOB_NAME} <${env.BUILD_URL}|${currentBuild.displayName}> by **${commitUser}** " +
                     "Build Success. ${icons[randomIndex]}\n" + "```${commitChangeset}```"
                 slackSend message: "${message}", color: 'good'
             break;
