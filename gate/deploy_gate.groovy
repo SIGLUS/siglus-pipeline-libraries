@@ -11,6 +11,7 @@ void call(context){
               if('SYSTEM' == user.toString()) { //timeout
                 currentBuild.result = "SUCCESS"
               }
+            }
     }
    }
   }
