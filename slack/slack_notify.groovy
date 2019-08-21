@@ -9,9 +9,6 @@ def call(context){
         switch(context.status){
             case null: // no result set yet means success
             case "SUCCESS":
-                def message = "@here ${env.JOB_NAME} <${env.BUILD_URL}|${currentBuild.displayName}> commit by ${commitUser}; " +
-                    "Build Success. ${icons[randomIndex]}\n" + "```${commitChangeset}```"
-                slackSend message: "${message}", color: 'good'
             break;
             case "FAILURE":
                 def message = "@here ${env.JOB_NAME} <${env.BUILD_URL}|${currentBuild.displayName}> commit by ${commitUser}; " +
@@ -19,7 +16,7 @@ def call(context){
                 slackSend message: "${message}", color: '#ff0000'
             break;
             default:
-            echo "Slack Notifier doing nothing: ${context.status}"
+                echo "Slack Notifier doing nothing: ${context.status}"
         }
     }
 }
