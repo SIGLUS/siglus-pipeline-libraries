@@ -1,7 +1,7 @@
 @BeforeStep
 void call(context){
     node {
-        when {
+        step.when {
             allOf {
             expression { return currentBuild.result == null || currentBuild.result == 'SUCCESS' }
             }
