@@ -1,7 +1,7 @@
 void call(){
   stage('Building'){
     node{
-      common.fetch_setting_env()
+      Common.fetch_setting_env()
       ansiColor('xterm') {
         println "gradle: build()"
         sh 'mkdir -p /ebs2/gradle-caches/${JOB_NAME}'
