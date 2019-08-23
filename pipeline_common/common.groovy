@@ -1,4 +1,4 @@
-void call() {
+def fetch_setting_env() {
     withCredentials([file(credentialsId: 'setting_env', variable: 'SETTING_ENV')]) {
         sh '''
             echo "clear env file"
