@@ -25,4 +25,5 @@ libraries{
   merge = true
   slack
   gate
+  common
 }
