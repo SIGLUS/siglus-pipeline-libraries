@@ -9,8 +9,8 @@ void call(app_env){
                 rm -f settings.env
                 wget https://raw.githubusercontent.com/SIGLUS/openlmis-ref-distro/master/docker-compose.yml
                 sed -i "s#openlmis#siglusdevops#g" docker-compose.yml
-                GIT_REVISION=$(git rev-parse HEAD)
-                IMAGE_VERSION=${BUILD_NUMBER}-${GIT_REVISION}
+                SHORT_GIT_REVISION=$(git rev-parse --short HEAD)
+                IMAGE_VERSION=${BUILD_NUMBER}-${SHORT_GIT_REVISION}
                 PROJECT_NAME=${JOB_NAME%/*}
                 SERVICE_NAME=${PROJECT_NAME#*-}
                 IMAGE_NAME=`echo "OL_${SERVICE_NAME}_VERSION" |  tr '[:lower:]' '[:upper:]'`
