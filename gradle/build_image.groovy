@@ -2,8 +2,8 @@ def call(){
   stage "Building Docker Image", {
     node{
       sh '''
-      GIT_REVISION=$(git rev-parse HEAD)
-      IMAGE_VERSION=${BUILD_NUMBER}-${GIT_REVISION}
+      SHORT_GIT_REVISION=$(git rev-parse --short HEAD)
+      IMAGE_VERSION=${BUILD_NUMBER}-${SHORT_GIT_REVISION}
       PROJECT_NAME=${JOB_NAME%/*}
       IMAGE_REPO=siglusdevops/${PROJECT_NAME#*-}
       IMAGE_NAME=${IMAGE_REPO}:${IMAGE_VERSION}
