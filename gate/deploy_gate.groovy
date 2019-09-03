@@ -2,7 +2,7 @@ void call(context){
    stage('wait'){
     node{
            try {
-                timeout(5) {
+                timeout ( time: 24, unit: "HOURS" ) {
                     input(message: 'Deploy this build to QA?')
                 }
             } catch (err) {
