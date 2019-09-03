@@ -1,7 +1,7 @@
 void call(app_env){
   stage "Deploy to ${app_env.long_name}", {
       node{
-        withCredentials([file(credentialsId: 'setting_env', variable: 'SETTING_ENV')]) {
+        withCredentials([file(credentialsId: "setting_env_${app_env.short_name}", variable: 'SETTING_ENV')]) {
           withEnv(["APP_ENV=${app_env.short_name}", "DOCKER_HOST=tcp://${app_env.hosts}:2376"]) {
             sh '''
                 rm -f docker-compose*
