@@ -3,5 +3,5 @@ pmd_test()
 build_app()
 build_image()
 deploy_to dev
-deploy_gate()
+// deploy_gate()
 deploy_to qa
