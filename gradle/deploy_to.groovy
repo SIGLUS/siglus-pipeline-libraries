@@ -3,7 +3,7 @@ void call(app_env){
       node {
         if (app_env.short_name == 'dev') {
             echo '******This is dev deployment******'
-            // do_deploy app_env
+            do_deploy app_env
         } else {
             echo '******This is No dev deployment******'
         }
