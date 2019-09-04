@@ -6,7 +6,7 @@ void call(app_env){
             do_deploy app_env
         } else {   
             try {
-                timeout ( time: 10, unit: "MINUTES" ) {
+                timeout ( time: 30, unit: "MINUTES" ) {
                     input(message: 'Deploy this build ?')
                 }
                 echo "******This is deploy for ${app_env.long_name}******"
