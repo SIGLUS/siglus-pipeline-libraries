@@ -2,10 +2,21 @@ void call(app_env){
     stage "Deploy to ${app_env.long_name}", {
       node {
         if (app_env.short_name == 'dev') {
-            echo '******This is dev deployment******'
+            echo "******This is deploy for ${app_env.long_name}******"
             do_deploy app_env
-        } else {
-            echo '******This is No dev deployment******'
+        } else {   
+            try {
+                timeout ( time: 10, unit: "MINUTES" ) {
+                    input(message: 'Deploy this build ?')
+                }
+                echo "******This is deploy for ${app_env.long_name}******"
+                do_deploy app_env
+            } catch (err) {
+              def user = err.getCauses()[0].getUser()
+              if('SYSTEM' == user.toString()) { //timeout
+                currentBuild.result = "SUCCESS"
+              }
+            }
         }
       }
     }     
