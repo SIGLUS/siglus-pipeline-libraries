@@ -10,11 +10,19 @@ application_environments{
     long_name = "Development"
     hosts = "dev.siglus.us"
   }
+
   qa{
     short_name = "qa"
     long_name = "QA"
     hosts = "qa.siglus.us"
   }
+
+  uat{
+    short_name = "uat"
+    long_name = "UAT"
+    hosts = "uat.siglus.us"
+  }
+  
   prod{
     short_name = "prod"
     long_name = "Production"
