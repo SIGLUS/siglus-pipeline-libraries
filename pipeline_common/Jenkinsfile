@@ -5,3 +5,4 @@ build_image()
 deploy_to dev
 // deploy_gate()
 deploy_to qa
+deploy_to uat
