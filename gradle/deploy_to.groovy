@@ -28,7 +28,7 @@ def deploy(app_env){
         sh '''
             rm -f docker-compose*
             rm -f .env
-            rm -f settings.env  ${app_env.short_name}
+            rm -f settings.env
             wget https://raw.githubusercontent.com/SIGLUS/openlmis-ref-distro/master/docker-compose-aws-${APP_ENV}.yml
             sed -i "s#openlmis#siglusdevops#g" docker-compose-aws-${APP_ENV}.yml
             SHORT_GIT_REVISION=$(git rev-parse --short HEAD)
