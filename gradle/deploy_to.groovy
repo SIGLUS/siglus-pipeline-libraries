@@ -36,6 +36,7 @@ def deploy(app_env){
             PROJECT_NAME=${JOB_NAME%/*}
             SERVICE_NAME=${PROJECT_NAME#*-}
             IMAGE_NAME=`echo "OL_${SERVICE_NAME}_VERSION" |  tr '[:lower:]' '[:upper:]'`
+            IMAGE_NAME=${IMAGE_NAME}-${BRANCH_NAME}
             cp $SETTING_ENV settings.env
             sed -i "s#<APP_ENV>#${APP_ENV}#g" settings.env
             echo "${IMAGE_NAME}=${IMAGE_VERSION}" > .env
