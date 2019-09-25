@@ -1,13 +1,13 @@
-pmd_test()
+// pmd_test()
 // integration_test()
 build_app()
 build_image  
-stage('deploy'){
-    steps{
-        deploy_to dev
-        // deploy_gate()
-        deploy_to qa
+
+stages{
+    if (env.BRANCH_NAME == "master"){
+      deploy_to dev
+      deploy_to qa
+    } else if (env.BRANCH_NAME == "openlmis") {
         deploy_to uat
     }
-}              
-
+} 
