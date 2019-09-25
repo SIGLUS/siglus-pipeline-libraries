@@ -2,6 +2,11 @@ pmd_test()
 // integration_test()
 build_app()
 build_image()  
-deploy_to dev
-deploy_to qa
-deploy_to uat
+
+println "****** ${env.BRANCH_NAME} *****"
+if (env.BRANCH_NAME == "master") {
+    deploy_to dev
+    deploy_to qa
+} else if (env.BRANCH_NAME == "openlmis") {
+    deploy_to uat
+}
