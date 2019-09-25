@@ -1,7 +1,7 @@
 pmd_test()
 // integration_test()
 build_app()
-build_image  
+build_image()  
 deploy_to dev
 deploy_to qa
 deploy_to uat
