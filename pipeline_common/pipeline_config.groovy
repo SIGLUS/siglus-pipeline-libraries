@@ -8,19 +8,19 @@ application_environments{
   dev{
     short_name = "dev"
     long_name = "Development"
-    hosts = "dev.siglus.us"
+    hosts = "dev.siglus.us.internal"
   }
 
   qa{
     short_name = "qa"
     long_name = "QA"
-    hosts = "qa.siglus.us"
+    hosts = "qa.siglus.us.internal"
   }
 
   uat{
     short_name = "uat"
     long_name = "UAT"
-    hosts = "uat.siglus.us"
+    hosts = "uat.siglus.us.internal"
   }
   
   prod{

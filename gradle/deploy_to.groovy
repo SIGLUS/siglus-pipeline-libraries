@@ -24,7 +24,7 @@ void call(app_env){
 
 def deploy(app_env){
     withCredentials([file(credentialsId: "setting_env_${app_env.short_name}", variable: 'SETTING_ENV')]) {
-      withEnv(["APP_ENV=${app_env.short_name}", "DOCKER_HOST=tcp://${app_env.hosts}:2376"]) {
+      withEnv(["APP_ENV=${app_env.short_name}", "CONSUL_HOST=${app_env.hosts}:8500","DOCKER_HOST=tcp://${app_env.hosts}:2376"]) {
         sh '''
             rm -f docker-compose*
             rm -f .env
@@ -40,8 +40,8 @@ def deploy(app_env){
             sed -i "s#<APP_ENV>#${APP_ENV}#g" settings.env
             echo "${IMAGE_NAME}=${IMAGE_VERSION}" > .env
             echo "Start deregister ${SERVICE_NAME} on ${APP_ENV} consul"
-            curl -s http://${APP_ENV}.siglus.us:8500/v1/health/service/${SERVICE_NAME} | \
-            jq -r '.[] | "curl -XPUT http://${APP_ENV}.siglus.us:8500/v1/agent/service/deregister/" + .Service.ID' > clear.sh
+            curl -s http://${CONSUL_HOST}/v1/health/service/${SERVICE_NAME} | \
+            jq -r '.[] | "curl -XPUT http://${CONSUL_HOST}/v1/agent/service/deregister/" + .Service.ID' > clear.sh
             chmod a+x clear.sh && ./clear.sh
             echo "Start deploy ${SERVICE_NAME} on ${APP_ENV}"
             docker-compose -H ${DOCKER_HOST} -f docker-compose-aws-${APP_ENV}.yml -p openlmis-ref-distro up --no-deps --force-recreate -d ${SERVICE_NAME}
