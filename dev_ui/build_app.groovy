@@ -8,8 +8,8 @@ void call(){
                     docker-compose down --volumes
                     docker-compose pull
                     docker-compose run --entrypoint /dev-ui/build.sh ${PROJECT_SHORT_NAME}
-                    sleep 30 && junit '**/build/test/test-results/*.xml'
                 '''
+                junit '**/build/test/test-results/*.xml'
             }
             catch (exc) {
                 currentBuild.result = 'UNSTABLE'
