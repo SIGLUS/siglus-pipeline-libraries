@@ -1,22 +1,31 @@
 void call(){
-  stage('Building'){
+  stage('Build and Push Image'){
     node{
-      println "grunt: build()"
-      sh '''
-          export NODE_CACHE_ROOT=/ebs/node-caches
-          export "UID=`id -u jenkins`"
-          export DOCKERHUB_ORG=siglusdevops
-          docker-compose build image
-          docker-compose down --volumes
-          GIT_REVISION=$(git rev-parse HEAD)
-          IMAGE_VERSION=${BUILD_NUMBER}-${GIT_REVISION}
-          PROJECT_NAME=${JOB_NAME%/*}
-          IMAGE_NAME=${DOCKERHUB_ORG}/${PROJECT_NAME#*-}:${IMAGE_VERSION}
-          docker tag ${DOCKERHUB_ORG}/${PROJECT_NAME#*-}:latest ${IMAGE_NAME}
-          docker push ${DOCKERHUB_ORG}/${PROJECT_NAME#*-}:latest
-          docker push ${IMAGE_NAME}
-          docker rmi ${IMAGE_NAME} ${DOCKERHUB_ORG}/${PROJECT_NAME#*-}:latest
-      '''
+        withCredentials([usernamePassword(
+                      credentialsId: "cad2f741-7b1e-4ddd-b5ca-2959d40f62c2",
+                      usernameVariable: "USER",
+                      passwordVariable: "PASS"
+                    )]) {
+              sh 'set +x'
+              sh 'docker login -u $USER -p $PASS'
+        }
+        script {
+            try {
+                sh '''
+                    export "UID=`id -u jenkins`"
+                    docker-compose build image
+                    docker tag ${IMAGE_REPO}:latest ${IMAGE_REPO}:${VERSION}
+                    docker push ${IMAGE_REPO}:${VERSION}
+                    docker push ${IMAGE_REPO}:latest
+                    echo "**********clean*********"
+                    docker rmi ${IMAGE_REPO}:${VERSION}
+                    docker-compose down --volumes
+                '''
+            }
+            catch (exc) {
+                currentBuild.result = 'UNSTABLE'
+            }
+        }
     }
   }
 }

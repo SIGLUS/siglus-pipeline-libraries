@@ -1,8 +1,22 @@
 void call(){
-  stage('Building'){
+  stage('Build and Test App'){
     node{
-      println "grunt: build()"
-      sh 'printenv'
+        script {
+            try {
+                sh '''
+                    export "UID=`id -u jenkins`"
+                    docker-compose down --volumes
+                    docker-compose pull
+                    docker-compose run --entrypoint /dev-ui/build.sh ${PROJECT_SHORT_NAME}
+                    sleep 30 && junit '**/build/test/test-results/*.xml'
+                '''
+            }
+            catch (exc) {
+                currentBuild.result = 'UNSTABLE'
+            }
+        }
     }
+    // archive 'build/styleguide/*, build/styleguide/**/*, build/docs/*, build/docs/**/*, build/messages/*'
+    
   }
 }
