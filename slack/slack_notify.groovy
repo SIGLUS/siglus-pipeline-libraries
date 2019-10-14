@@ -1,4 +1,5 @@
 @Notify
+//Run for each stage
 def call(context){
     node{
         def commitUser = sh(returnStdout: true, script: "git show -s --pretty=%an").trim()
@@ -6,11 +7,9 @@ def call(context){
         def icons = [":unicorn_face:", ":beer:", ":bee:", ":man_dancing:",
             ":party_parrot:", ":ghost:", ":dancer:", ":scream_cat:"]
         def randomIndex = (new Random()).nextInt(icons.size())
-        println context.status
         switch(context.status){
             case null: // no result set yet means success
             case "SUCCESS":
-            case "UNSTABLE":
             break;
             case "FAILURE":
                 def message = "@here ${env.JOB_NAME} <${env.BUILD_URL}|${currentBuild.displayName}> commit by ${commitUser}; " +

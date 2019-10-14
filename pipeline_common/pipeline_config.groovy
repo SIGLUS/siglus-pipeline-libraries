@@ -22,6 +22,12 @@ application_environments{
     long_name = "UAT"
     hosts = "uat.siglus.us.internal"
   }
+
+  integ{
+    short_name = "integ"
+    long_name = "integ"
+    hosts = "integ.siglus.us.internal"
+  }
   
   prod{
     short_name = "prod"

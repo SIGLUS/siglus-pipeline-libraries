@@ -1,7 +1,7 @@
 void call(app_env){
     stage "Deploy to ${app_env.long_name}", {
       node {
-        if (app_env.short_name == 'dev') {
+        if (app_env.short_name ==~ 'dev|integ') {
             echo "******This is deploy for ${app_env.long_name}******"
             deploy app_env
         } else {   
