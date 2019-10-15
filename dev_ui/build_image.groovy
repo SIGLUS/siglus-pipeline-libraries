@@ -11,6 +11,7 @@ void call(){
         }
         script {
             try {
+                sh "printenv"
                 sh '''
                     export "UID=`id -u jenkins`"
                     docker-compose build image
