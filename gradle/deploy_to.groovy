@@ -39,10 +39,11 @@ def deploy(app_env){
             cp $SETTING_ENV settings.env
             sed -i "s#<APP_ENV>#${APP_ENV}#g" settings.env
             echo "${IMAGE_NAME}=${IMAGE_VERSION}" > .env
+
             echo "Start deregister ${SERVICE_NAME} on ${APP_ENV} consul"
-            curl -s http://${CONSUL_HOST}/v1/health/service/${SERVICE_NAME} | \
-            jq -r '.[] | "curl -XPUT http://${CONSUL_HOST}/v1/agent/service/deregister/" + .Service.ID' > clear.sh
-            chmod a+x clear.sh && ./clear.sh
+            docker -H ${DOCKER_HOST} exec openlmis-ref-distro_${SERVICE_NAME}_1 node consul/registration.js -c deregister -f consul/config.json -r consul/api-definition.yaml 
+            docker -H ${DOCKER_HOST} stop openlmis-ref-distro_${SERVICE_NAME}_1
+
             echo "Start deploy ${SERVICE_NAME} on ${APP_ENV}"
             docker-compose -H ${DOCKER_HOST} -f docker-compose-aws-${APP_ENV}.yml -p openlmis-ref-distro up --no-deps --force-recreate -d ${SERVICE_NAME}
         '''
