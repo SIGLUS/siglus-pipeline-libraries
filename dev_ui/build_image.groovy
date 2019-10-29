@@ -19,7 +19,7 @@ void call(){
                     docker push ${IMAGE_REPO}:${VERSION}
                     docker push ${IMAGE_REPO}:latest
                     echo "**********clean*********"
-                    docker rmi ${IMAGE_REPO}:${VERSION}
+                    docker rmi -f ${IMAGE_REPO}:${VERSION}  ${IMAGE_REPO}:latest
                     docker-compose down --volumes
                 '''
             }
