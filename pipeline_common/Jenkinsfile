@@ -12,4 +12,6 @@ if (env.BRANCH_NAME == "master") {
 } else if (env.BRANCH_NAME =~ /^release*/ ) {
     deploy_to integ
     deploy_to uat
+} else {
+    println "****** ERROR branch name  *****"
 }
