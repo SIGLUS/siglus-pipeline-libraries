@@ -39,10 +39,10 @@ def deploy(app_env){
             cp $SETTING_ENV settings.env
             sed -i "s#<APP_ENV>#${APP_ENV}#g" settings.env
             echo "${IMAGE_NAME}=${IMAGE_VERSION}" > .env
-
+            CONTAINER_NAME=$(docker ps -a| grep ${SERVICE_NAME} | awk '{print $NF}')
             echo "Start deregister ${SERVICE_NAME} on ${APP_ENV} consul"
-            docker -H ${DOCKER_HOST} exec openlmis-ref-distro_${SERVICE_NAME}_1 node consul/registration.js -c deregister -f consul/config.json -r consul/api-definition.yaml 
-            docker -H ${DOCKER_HOST} stop openlmis-ref-distro_${SERVICE_NAME}_1
+            docker -H ${DOCKER_HOST} exec ${CONTAINER_NAME} node consul/registration.js -c deregister -f consul/config.json -r consul/api-definition.yaml 
+            docker -H ${DOCKER_HOST} stop ${CONTAINER_NAME}
 
             echo "Start deploy ${SERVICE_NAME} on ${APP_ENV}"
             docker-compose -H ${DOCKER_HOST} -f docker-compose-aws-${APP_ENV}.yml -p openlmis-ref-distro up --no-deps --force-recreate -d ${SERVICE_NAME}
