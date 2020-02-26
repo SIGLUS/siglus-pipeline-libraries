@@ -41,3 +41,6 @@ libraries{
   gate
   // common
 }
+
+// restrict individual repository Jenkinsfiles
+allow_scm_jenkinsfile = false
